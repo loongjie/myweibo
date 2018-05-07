@@ -1,0 +1,55 @@
+<div class="right_panel">
+          <div class="right_top">
+            <ul>
+              <li><img src="__STATIC__/image/index.png" /><a href="{:url('index/home/home')}">首页</a></li>
+              <li><img src="__STATIC__/image/comments.png" /><a href="">私信</a></li>
+              <li><img src="__STATIC__/image/favorite.png" /><a href="{:url('index/user/mykeep',['id'=>session('user_id')])}">收藏</a></li>
+              <li><img src="__STATIC__/image/me.png" /><a href="{:url('index/Usercenter/index')}">个人信息设置</a>
+              </li>
+              <li><img src="__STATIC__/image/notic.png" /><a href="#">其他模块还在建设中~~~</a></li>
+            </ul>
+          </div>
+          <div class="right_bottom">
+            <h3 style="text-align:center;border-bottom:1px solid #ccc">分组</h3>
+            <ul>
+              {if $listfenzhu!=null}
+              {volist name="listfenzhu" id="vo"}
+              <li><img src="__STATIC__/image/me.png" /><a href="#">{$vo.groupname}</a></li>
+              {/volist}
+              {/if}
+              <li><img src="__STATIC__/image/me.png" /><button class="btn btn-primary btn-xs" style="margin-left:7px;" id='create_group'>创建分组</button>  </li>
+
+            </ul>
+          </div>
+
+          <!--创建分组-->
+<script type="text/javascript">
+  var addgroup="{:url('index/Base/addgroup')}";
+  var firstindex="{:url('index/home/home')}"
+</script>          
+<div id="add-group" class="add-group">
+  <p>创建好友分组</p>
+  <span>分组名称：</span>
+  <input type="text" name="name" class="name" id="gp-name"/>
+  <div class='gp-btn-wrap'>
+    <span class='btn a' id="gpp-add">添加</span>
+    <span class='btn b' id="gp-no">取消</span>
+  </div>
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

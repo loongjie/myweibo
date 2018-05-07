@@ -1,0 +1,190 @@
+{include file="comm/header" /}
+
+<div class="user_main">
+	<div class="user_content">
+		<!--个人信息-->
+		{include file="comm/userheader"}   
+		<!--个人信息-->
+		
+
+		<!--主页-->
+		<div class="plc_main">
+			{include file="comm/userleft"}
+			<!--左边-->
+
+			<!--右边-->
+			<div class="wb_right">
+                <!--标题-->
+				<div class="right_title">
+					<div class="title_weibo">我的微博</div>
+					<form>
+						<input class="serbtn" type="text" name="" placeholder="搜索我的微博">
+						<input class="btn" type="button" name="" value="搜索">
+					</form>	
+				</div>
+				
+				<!--微博-->
+				{foreach $weibo as $key=>$vo}
+
+        		{if condition="$vo['isturn'] eq 0"}
+        		<div class="center_main">
+             		<div class="main tabmain">
+                		<p style="color: #222;"><a href="{:url('User/user',['id'=>$vo.uid])}">{$vo.name}</a></p>
+                		<p style="color: #99a2aa;padding-top: 4px;font-size: 12px;">{$vo.time|date='Y-m-d H:i'}</p>
+                		<div style="margin-top: 10px;">
+                  		<div>{$vo.content}</div>
+                  		{if condition='$vo["picture"]'}
+                  		<div style="margin-top:10px;"><img src="__UPLOAD__/{$vo.picture}" style="width:240px;height:150px;"></div>
+                  		{/if}      
+                		</div>
+                		<ul style="margin-top:10px;padding-bottom:30px;">
+                  			<li  onclick="onclick1('tabss{$key}',0);">转发{if condition='$vo["turn"]'}({$vo.turn}){/if}&nbsp;&nbsp;|&nbsp;&nbsp;
+                  			</li>                 
+                  			<li  onclick="onclick1('tabss{$key}',1,{$vo['wbid']});">
+                    		<span class="plbtn" wid="{$vo.wbid}">评论</span>
+                    		{if condition='$vo["comment"]'}({$vo.comment}){/if}&nbsp;&nbsp;|&nbsp;&nbsp;
+                  			</li>
+                  			<span style="cursor: pointer;" class="keep{$key}" onclick="keep({$vo['wbid']},'keep{$key}')">收藏</span>{if condition='$vo["keep"]'}({$vo.keep}){/if}
+                		</ul>
+             		</div>
+             		<a href="" class="imgtitle" style="background-image:url(__UPLOAD__/{$vo.photo});"></a>
+             		{if condition="!(in_array($user.id,$followid)) and $self!=$vo['uid']"}
+             		<div class="guanzhu" id="care{$key}" onclick="care({$vo['uid']},'care{$key}')"><p>+关注</p></div>
+             		{/if}
+              		<!--选项卡-->
+             		<div class="tabs tabss{$key}" >
+
+                		<div class="tab">
+                  			<form action="{:url('User/relay',['wbid'=>$vo.wbid])}" method="post">
+                    		<textarea class="turntext" name="turntext" placeholder="转发并表达你的态度"></textarea>
+                    		<input type="button" class="sqibtn"  value="收起" onclick="onclick2('tabss{$key}',0);" />
+                    		<input type="submit" name="turnsubmit" class="turnsubmit" value="转发">
+                  			</form>
+                  		<a href="" class="imgtitle1" style="background-image:url(__UPLOAD__/{$loginphotp});"></a>
+                		</div>
+                
+
+                		<div class="tab taab">
+                  			<form class="comform" method="post" style="border-bottom: 1px solid #ccc;">
+                    		<textarea class="turntext" name="comtext" placeholder="请发表达你的评论"></textarea>
+                    		<input type="button" class="sqibtn"  value="收起" onclick="onclick2('tabss{$key}',1);" />
+                    		<input type="button" class="turnsubmit comebtn" wid="{$vo.wbid}" value="评论">
+                  			</form>
+                  		<a href="" class="imgtitle1" style="background-image:url(__UPLOAD__/{$loginphotp});"></a>
+                                            
+        				</div>
+                  
+              		<!--选项卡-->  
+             		</div>
+        		</div>
+
+        
+        		{/if}
+        
+
+        		{if condition="$vo['isturn'] neq 0"}
+        
+       			<div class="center_main">
+             		<div class="main tabmain">
+                	<p style="color: #222;"><a href="{:url('User/user',['id'=>$vo.uid])}">{$vo.name}</a></p>
+                	<p style="color: #99a2aa;padding-top: 4px;font-size: 12px;">{$vo.time|date='Y-m-d H:i'}</p>
+                	<div style="margin-top: 10px;">
+                  	<div>{$vo.content}</div>
+                  
+                    <!--转发的内容-->
+                    	<div class="turncontent">
+                        	<div class="turnmain">
+                            	<p style="color: #222;"><a href="{:url('index/user/user',['id'=>$vo['isturn']['userid']])}">{$vo['isturn']['name']}</a></p>
+                              	<p style="color: #99a2aa;padding-top: 4px;font-size: 12px;">{$vo['isturn']['time']|date='Y-m-d H:i'}</p>
+                              	<div style="margin-top: 10px;">
+                                <div>{$vo['isturn']['content']}</div>
+                                {if condition='$vo["isturn"]["picture"]'}
+                                <div style="margin-top:10px;"><img src="__UPLOAD__/{$vo['isturn']['picture']}" style="width:240px;height:150px;"></div> 
+                                {/if}     
+                            	</div>
+
+                           	</div>
+                           	<a href="" class="imgtitle" style="background-image:url(__UPLOAD__/{$vo['isturn']['photo']});"></a>
+                        </div>
+                 
+                    <!--转发的内容-->         
+                </div>
+
+                <ul style="margin-top:10px;padding-bottom:30px;">
+                	<li  onclick="onclick1('tabss{$key}',0);">
+                    转发
+                    {if condition='$vo["turn"]'}({$vo.turn}){/if}&nbsp;&nbsp;|&nbsp;&nbsp;
+                  	</li>                 
+                  	<li  onclick="onclick1('tabss{$key}',1,{$vo['wbid']});">
+                    <span class="plbtn" wid="{$vo.wbid}">评论</span>
+                    {if condition='$vo["comment"]'}({$vo.comment}){/if}&nbsp;&nbsp;|&nbsp;&nbsp;
+                  	</li>
+                  	<span style="cursor: pointer;" class="keep{$key}" onclick="keep({$vo['wbid']},'keep{$key}')">收藏</span>{if condition='$vo["keep"]'}({$vo.keep}){/if}
+                </ul>
+                </div>
+                <a href="" class="imgtitle" style="background-image:url(__UPLOAD__/{$vo.photo});"></a>
+                {if condition="!(in_array($user.id,$followid)) and $self!=$vo['uid']"}
+             	<div class="guanzhu" id="care{$key}" onclick="care({$vo['uid']},'care{$key}')"><p>+关注</p></div>
+             	{/if}
+             	<!--选项卡-->
+              	<div class="tabs tabss{$key}" >
+
+	                <div class="tab">
+	                  	<form action="{:url('User/relay',['wbid'=>$vo.wbid])}" method="post">
+	                    <textarea class="turntext" name="turntext" placeholder="转发并表达你的态度"></textarea>
+	                    <input type="button" class="sqibtn"  value="收起" onclick="onclick2('tabss{$key}',0);" />
+	                    <input type="submit" name="turnsubmit" class="turnsubmit" value="转发">
+	                  	</form>
+	                  	<a href="" class="imgtitle1" style="background-image:url(__UPLOAD__/{$loginphotp});"></a>
+	                </div>
+	                
+
+	                <div class="tab taab">
+	                  	<form class="comform" method="post" style="border-bottom: 1px solid #ccc;">
+	                    <textarea class="turntext" name="comtext" placeholder="请发表达你的评论"></textarea>
+	                    <input type="button" class="sqibtn"  value="收起" onclick="onclick2('tabss{$key}',1);" />
+	                    <input type="button" class="turnsubmit comebtn" wid="{$vo.wbid}" value="评论">
+	                  	</form>
+	                  	<a href="" class="imgtitle1" style="background-image:url(__UPLOAD__/{$loginphotp});"></a>
+	                </div>
+            	</div>  
+              <!--选项卡-->
+               
+
+        </div>
+
+         {/if}
+        {/foreach}
+        
+			</div>
+			<!--右边-->
+		</div>
+		<!--主页-->
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	var keepUrl="{:url('index/Home/keep')}";
+	var commentUrl="{:url('index/Home/comment')}";
+	var careUrl="{:url('index/Home/ralation')}";
+	var getcommUrl="{:url('index/Home/getComment')}";
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

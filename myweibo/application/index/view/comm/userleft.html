@@ -1,0 +1,30 @@
+<div class="wb_left">
+				<!--关注，粉丝，微博数-->
+				<div class="couter">
+					<div class="couter_box">
+						<strong class="numb">{$user.cares}</strong>
+						<span class="descip"><a href="{:url('index/Usercare/usercare',['id'=>$user.id])}">关注</a></span>
+					</div >
+					<div class="couter_box">
+						<strong class="numb">{$user.fans}</strong>
+						<span class="descip"><a href="{:url('index/Userfans/userfans',['id'=>$user.id])}">粉丝</a></span>
+					</div>
+					<div class="couter_box">
+						<strong class="numb">{$user.weibonum}</strong>
+						<span class="descip">微博</span>
+					</div>
+				</div>
+
+				<div class="right_top user_bottom">
+	            <ul>
+	              <li><img src="__STATIC__/image/index.png" /><a href="{:url('index/home/home')}">首页</a></li>
+	              <li><img src="__STATIC__/image/comments.png" /><a href="">私信</a></li>
+	              <li><img src="__STATIC__/image/favorite.png" /><a href="{:url('mykeep',['id'=>$user.id])}">收藏</a></li>
+	              {if $self==$user.id}
+	              <li><img src="__STATIC__/image/me.png" /><a href="{:url('index/Usercenter/index')}">个人信息设置</a>
+	              </li>
+	              {/if}
+	              <li><img src="__STATIC__/image/notic.png" /><a href="">其他模块还在建设中~~~</a></li>
+	            </ul>
+	            </div>
+</div>

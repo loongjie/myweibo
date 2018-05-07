@@ -1,0 +1,62 @@
+1. index.html  :实现登陆 ，注册,
+   regist.html: 注册
+
+   home.html: 发微博，显示个人信息(关注人数，粉丝数，微博数)
+             显示关注人的微博
+
+
+
+
+ 数据库设计：
+            1.个人信息表wb_user: id  name password  register_time
+
+            2.个人详细信息表wb_userinfo:id username sex adress intro photo 等
+
+            3.分组表：id  name 
+
+            4.关系表：id followid  fansid
+
+            5.             
+
+
+
+注册：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

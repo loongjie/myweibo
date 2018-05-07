@@ -1,0 +1,193 @@
+
+{include file="comm/header" /}
+  <!--main-->
+  <div class="home_main">
+  	<div class="home_content">
+
+      <!--left-->
+  		{include file="comm/left"}
+      
+      <!--center-->
+  		<div class="center_panel">
+        <div class="section_block">
+          <form action="{:url('index/Home/postweibo')}" method="post" enctype="multipart/form-data">
+            <div class="content1">
+              <textarea class="textarea" placeholder="有什么和大家分享的?" name="textarea"></textarea>
+              <input class="upload1" type="file" name="image" value="上传图片" /> <br> 
+            </div>
+              <input type="submit" class="submit1" value="发布" />
+          </form>
+        </div>
+
+        <div class="titleall">
+          <ul>
+            <li><a href="{:url('Home/home')}">所有动态</a></li>
+            <li><a href="{:url('Home/trends')}">关注动态</a></li>
+            <li><a href="{:url('Home/self')}">自己</a></li>
+          </ul>
+        </div>
+        
+        {foreach $weibo as $key=>$vo}
+
+        {if condition="$vo['isturn'] eq 0"}
+        <div class="center_main">
+             <div class="main tabmain">
+                <p style="color: #222;"><a href="{:url('User/user',['id'=>$vo.uid])}">{$vo.name}</a></p>
+                <p style="color: #99a2aa;padding-top: 4px;font-size: 12px;">{$vo.time|date='Y-m-d H:i'}</p>
+                <div style="margin-top: 10px;">
+                  <div>{$vo.content}</div>
+                  {if condition='$vo["picture"]'}
+                  <div style="margin-top:10px;"><img src="__UPLOAD__/{$vo.picture}" style="width:240px;height:150px;"></div>
+                  {/if}      
+                </div>
+                <ul style="margin-top:10px;padding-bottom:30px;">
+                  <li  onclick="onclick1('tabss{$key}',0);">
+                    转发
+                    {if condition='$vo["turn"]'}({$vo.turn}){/if}&nbsp;&nbsp;|&nbsp;&nbsp;
+                  </li>                 
+                  <li  onclick="onclick1('tabss{$key}',1,{$vo['wbid']});">
+                    <span class="plbtn" wid="{$vo.wbid}">评论</span>
+                    {if condition='$vo["comment"]'}({$vo.comment}){/if}&nbsp;&nbsp;|&nbsp;&nbsp;
+                  </li>
+                  <span style="cursor: pointer;" class="keep{$key}" onclick="keep({$vo['wbid']},'keep{$key}')">收藏</span>{if condition='$vo["keep"]'}({$vo.keep}){/if}
+                </ul>
+             </div>
+             <a href="" class="imgtitle" style="background-image:url(__UPLOAD__/{$vo.photo});"></a>
+             {if condition="!(in_array($vo['uid'],$followid)) and $self!=$vo['uid']"}
+             <div class="guanzhu" id="care{$key}" onclick="care({$vo['uid']},'care{$key}')"><p>+关注</p></div>
+             {/if}
+              <!--选项卡-->
+             <div class="tabs tabss{$key}" >
+
+                <div class="tab">
+                  <form action="{:url('User/relay',['wbid'=>$vo.wbid])}" method="post">
+                    <textarea class="turntext" name="turntext" placeholder="转发并表达你的态度"></textarea>
+                    <input type="button" class="sqibtn"  value="收起" onclick="onclick2('tabss{$key}',0);" />
+                    <input type="submit" name="turnsubmit" class="turnsubmit" value="转发">
+                  </form>
+                  <a href="" class="imgtitle1" style="background-image:url(__UPLOAD__/{$loginphotp});"></a>
+                </div>
+                
+
+                <div class="tab taab">
+                  <form class="comform" method="post" style="border-bottom: 1px solid #ccc;">
+                    <textarea class="turntext" name="comtext" placeholder="请发表达你的评论"></textarea>
+                    <input type="button" class="sqibtn"  value="收起" onclick="onclick2('tabss{$key}',1);" />
+                    <input type="button" class="turnsubmit comebtn" wid="{$vo.wbid}" value="评论">
+                  </form>
+                  <a href="" class="imgtitle1" style="background-image:url(__UPLOAD__/{$loginphotp});"></a>
+<!--
+                  <div class="discuss">
+                    <img src="__UPLOAD__/"  />
+                    <div>
+                      <span class="span1"></span><br />
+                      <p style="margin-top:5px;"></p>
+                      <span class="span2"></span>
+                    </div>
+                  </div>
+-->                
+             
+                  
+        </div>
+                  
+              <!--选项卡-->  
+             </div>
+        </div>
+
+        
+        {/if}
+        
+
+        {if condition="$vo['isturn'] neq 0"}
+        
+        <div class="center_main">
+             <div class="main tabmain">
+                <p style="color: #222;"><a href="{:url('User/user',['id'=>$vo.uid])}">{$vo.name}</a></p>
+                <p style="color: #99a2aa;padding-top: 4px;font-size: 12px;">{$vo.time|date='Y-m-d H:i'}</p>
+                <div style="margin-top: 10px;">
+                  <div>{$vo.content}</div>
+                  
+                    <!--转发的内容-->
+                        <div class="turncontent">
+                           <div class="turnmain">
+                              <p style="color: #222;"><a href="{:url('index/user/user',['id'=>$vo['isturn']['userid']])}">{$vo['isturn']['name']}</a></p>
+                              <p style="color: #99a2aa;padding-top: 4px;font-size: 12px;">{$vo['isturn']['time']|date='Y-m-d H:i'}</p>
+                              <div style="margin-top: 10px;">
+                                <div>{$vo['isturn']['content']}</div>
+                                {if condition='$vo["isturn"]["picture"]'}
+                                <div style="margin-top:10px;"><img src="__UPLOAD__/{$vo['isturn']['picture']}" style="width:240px;height:150px;"></div> 
+                                {/if}     
+                              </div>
+
+                           </div>
+                           <a href="" class="imgtitle" style="background-image:url(__UPLOAD__/{$vo['isturn']['photo']});"></a>
+                        </div>
+                 
+                    <!--转发的内容-->         
+                </div>
+
+                <ul style="margin-top:10px;padding-bottom:30px;">
+                  <li  onclick="onclick1('tabss{$key}',0);">
+                    转发
+                    {if condition='$vo["turn"]'}({$vo.turn}){/if}&nbsp;&nbsp;|&nbsp;&nbsp;
+                  </li>                 
+                  <li  onclick="onclick1('tabss{$key}',1,{$vo['wbid']});">
+                    <span class="plbtn" wid="{$vo.wbid}">评论</span>
+                    {if condition='$vo["comment"]'}({$vo.comment}){/if}&nbsp;&nbsp;|&nbsp;&nbsp;
+                  </li>
+                  <span style="cursor: pointer;" class="keep{$key}" onclick="keep({$vo['wbid']},'keep{$key}')">收藏</span>{if condition='$vo["keep"]'}({$vo.keep}){/if}
+                </ul>
+             </div>
+             <a href="" class="imgtitle" style="background-image:url(__UPLOAD__/{$vo.photo});"></a>
+             {if condition="!(in_array($user.id,$followid)) and $self!=$vo['uid']"}
+             <div class="guanzhu" id="care{$key}" onclick="care({$vo['uid']},'care{$key}')"><p>+关注</p></div>
+             {/if}
+             <!--选项卡-->
+              <div class="tabs tabss{$key}" >
+
+                <div class="tab">
+                  <form action="{:url('User/relay',['wbid'=>$vo.wbid])}" method="post">
+                    <textarea class="turntext" name="turntext" placeholder="转发并表达你的态度"></textarea>
+                    <input type="button" class="sqibtn"  value="收起" onclick="onclick2('tabss{$key}',0);" />
+                    <input type="submit" name="turnsubmit" class="turnsubmit" value="转发">
+                  </form>
+                  <a href="" class="imgtitle1" style="background-image:url(__UPLOAD__/{$loginphotp});"></a>
+                </div>
+                
+
+                <div class="tab taab">
+                  <form class="comform" method="post" style="border-bottom: 1px solid #ccc;">
+                    <textarea class="turntext" name="comtext" placeholder="请发表达你的评论"></textarea>
+                    <input type="button" class="sqibtn"  value="收起" onclick="onclick2('tabss{$key}',1);" />
+                    <input type="button" class="turnsubmit comebtn" wid="{$vo.wbid}" value="评论">
+                  </form>
+                  <a href="" class="imgtitle1" style="background-image:url(__UPLOAD__/{$loginphotp});"></a>
+
+                </div>
+              </div>  
+              <!--选项卡-->
+               
+
+        </div>
+
+         {/if}
+        {/foreach}
+        {$weibo|raw}
+      </div>
+      
+  
+      <!--right-->
+      {include file="comm/right"}
+
+    </div>
+  </div>
+    
+<div>footer</div>
+<script type="text/javascript">
+  var keepUrl="{:url('index/Home/keep')}";
+  var commentUrl="{:url('index/Home/comment')}";
+  var careUrl="{:url('index/Home/ralation')}";
+  var getcommUrl="{:url('index/Home/getComment')}";
+</script>
+</body>
+</html>

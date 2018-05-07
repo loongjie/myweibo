@@ -1,0 +1,17 @@
+<div>
+			<div class="user_top" style="background-image: url(__UPLOAD__/moren/timg4.png);">
+				<div class="pf_photo">
+					<p class="photo_wrap"><img src="__UPLOAD__/{$user.photo}"></p>
+				</div>
+				<div class="pf_name">
+					<h1>{$user.name}</h1>
+					{if condition='!(in_array($user.id,$followid)) AND $self!=$user.id'}
+					<button type="button" class="btn btn-success" uid="{$user.id}">关注TA</button>
+					{/if}
+				</div>
+				<div class="pf_intro">{$user.note|default="这家伙很懒，什么也没留下丶"}</div>
+				<button type="button" class="btn btn-info btn1">更换皮肤</button>    
+			</div>
+			
+			
+</div>

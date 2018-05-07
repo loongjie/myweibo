@@ -1,0 +1,49 @@
+{include file="comm/header" /}
+
+<div class="user_main">
+	<div class="user_content">
+		<!--个人信息-->
+		{include file="comm/userheader"}   
+		<!--个人信息-->
+		
+
+		<!--主页-->
+		<div class="plc_main">
+			{include file="comm/userleft"}
+			<!--左边-->
+
+			<!--右边-->
+			<div class="wb_right">
+                <!--标题-->
+				<div class="right_title">
+					<div class="title_weibo">我的微博</div>
+					<form>
+						<input class="serbtn" type="text" name="" placeholder="搜索我的微博">
+						<input class="btn" type="button" name="" value="搜索">
+					</form>	
+				</div>
+				{volist name="res" id="vo"}
+				<div class="user_box">
+					<div class="user_p"><img src="__UPLOAD__/{$vo.photo}"></div>
+					<div class="user_j">
+						<strong><a href="{:url('index/user/user',['id'=>$vo.id])}">{$vo.name}</a></strong>
+						<p>签名&nbsp;:&nbsp;&nbsp;{$vo.note|default="這家伙很懒，签名都没有"}</p>
+						{if condition="!in_array($vo.id,$followid) and $vo.id!=$self"}
+						<button class="btn btn-primary btn-sm care" uid={$vo.id}>关注</button>
+						{elseif $vo.id!=$self}
+						<button class="btn btn-primary btn-sm nocare" uid={$vo.id}>取消关注</button>
+						{/if}
+					</div>
+				</div>
+				{/volist}
+				{$res|raw}
+
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+	var usercareUrl="{:url('index/user/care')}";
+	var usernocareUrl="{:url('index/user/nocare')}";
+	var careUrl="{:url('index/Home/ralation')}";
+</script>
+</div>	

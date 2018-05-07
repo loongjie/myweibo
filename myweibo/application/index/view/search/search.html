@@ -1,0 +1,41 @@
+{include file="comm/header" /}
+<link rel="stylesheet" type="text/css" href="">
+<div class="home_main">
+  	<div class="home_content">
+      {include file="comm/right"}
+
+      <div class="usercenter">
+         <div class="usermian">
+         	<img  class="searchlog" src="__STATIC__/image/search.png" />
+
+			<form class="searchform" method="get" action="{:url('search')}">
+			  <div class="form-group">
+			    <input type="text" class="form-control" value="{$search}" name="search">
+			  </div>
+			  <button type="submit" class="btn btn-default">搜一下</button>
+			</form>
+
+			<div class="searli">
+				<ul>
+					<li><a href="">搜人</a></li>
+				</ul>
+			</div>
+            {volist name="res" id="vo"}  
+			<div class="searchpp">
+				<img src="__UPLOAD__/{$vo.photo}">
+				<div class="searchname">
+					<span style="color:red;font-size:16px;">{$vo.name}</span><br />
+					<span>关注：{$vo.cares}&nbsp;&nbsp;|&nbsp;&nbsp;粉丝：{$vo.fans}&nbsp;&nbsp;|&nbsp;&nbsp;微博：{$vo.weibonum}</span>
+				</div>
+				<div class="btn-group1" role="group">
+				    <a href="{:url('index/user/user',['id'=>$vo.id])}"><button type="button" class="btn btn-default" id="{$vo.name}">看下Ta</button></a>
+				</div>
+			</div>
+			{/volist}
+			{$res|raw}
+
+         </div>	
+      </div>
+
+    </div>	
+</div>  

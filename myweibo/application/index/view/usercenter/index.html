@@ -1,0 +1,40 @@
+{include file="comm/header" /}
+<link rel="stylesheet" type="text/css" href="">
+<div class="home_main">
+  	<div class="home_content">
+      {include file="comm/right"}
+
+      <div class="usercenter">
+         <div class="usermian">
+         	<h2>修改个人信息</h2>
+         	<form action="checkuserinfo" method="post" enctype="multipart/form-data">
+				  <div class="form-group">
+				    <label for="exampleInputEmail1">用户名</label>
+				    <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email" value="{$result['name']}" name="name">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">密码</label>
+				    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" value="{$result['password']}" name="password">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">邮箱</label>
+				    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="email" value="{$result['email']}" name="email">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputFile">上传头像</label>
+				    <input type="file" id="exampleInputFile" name="file">
+				  </div>
+				  <div class="form-group">
+				    <label for="exampleInputPassword1">个性签名</label>
+				    <textarea type="password" class="form-control" id="exampleInputPassword1" placeholder="用一句话表达自己" value="{$result['note']}" name="note"></textarea> 
+				  </div>
+				 
+				  <button type="submit" class="btn btn-default">点击提交</button>
+            </form>
+         </div>	
+      </div>
+
+    </div>	
+</div>  		
+
+
